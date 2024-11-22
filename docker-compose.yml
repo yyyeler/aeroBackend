@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  postgres-db:
+    image: postgres:latest
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: aero2024
+      POSTGRES_DB: aero
+    ports:
+      - "5432:5432"
+
+  aero-app:
+    build:
+      context: .
+    container_name: aero-container
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:5432/aero
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: aero2024
